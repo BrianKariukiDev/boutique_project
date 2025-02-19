@@ -11,4 +11,12 @@ class Address extends Model
         'latitude',
         'longitude'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function deliveries(){
+        return $this->hasMany(Delivery::class);
+    }
 }

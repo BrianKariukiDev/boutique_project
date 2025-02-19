@@ -13,4 +13,12 @@ class PickupPoint extends Model
         'longitude',
         'agent_id'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function deliveries(){
+        return $this->hasMany(Delivery::class);
+    }
 }
