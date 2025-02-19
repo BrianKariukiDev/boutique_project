@@ -20,4 +20,8 @@ class Product extends Model
         'in_stock',
         'on_sale',
     ];
+
+    protected  $casts=[
+        'images'=>'array'
+    ];
 }
