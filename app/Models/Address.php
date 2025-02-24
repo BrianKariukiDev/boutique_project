@@ -8,6 +8,8 @@ class Address extends Model
 {
     protected $fillable = [
         'user_id',
+        'order_id',
+        'is_pickup_point',
         'latitude',
         'longitude'
     ];
@@ -18,5 +20,9 @@ class Address extends Model
 
     public function deliveries(){
         return $this->hasMany(Delivery::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 }
