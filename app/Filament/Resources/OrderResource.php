@@ -128,8 +128,8 @@ class OrderResource extends Resource
                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                         ->columnSpan(4)
                                         ->reactive()
-                                        ->afterStateUpdated(fn($state, Set $set)=>$set('unit_amount',Product::find($state)?->price??null))
-                                        ->afterStateUpdated(fn($state, Set $set)=>$set('total_amount',Product::find($state)?->price??null)),
+                                        ->afterStateUpdated(fn($state, Set $set)=>$set('unit_amount',Product::find($state)?->sale_price??null))
+                                        ->afterStateUpdated(fn($state, Set $set)=>$set('total_amount',Product::find($state)?->sale_price??null)),
                                         
                                        TextInput::make('quantity')
                                         ->required()
@@ -252,6 +252,7 @@ class OrderResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
+            'view'=> Pages\ViewOrder::route('/{record}'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
