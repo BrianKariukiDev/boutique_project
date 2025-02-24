@@ -11,6 +11,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -65,6 +66,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime(),
 
+                Tables\Columns\TextColumn::make('role')
+                    ->sortable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('phone'),
 
                 Tables\Columns\TextColumn::make('city')
@@ -72,7 +77,15 @@ class UserResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('role')
+                    ->options([
+                        'customer' => 'Customer',
+                        'admin' => 'Admin',
+                        'agent' => 'Agent',
+                    ]),
+
+                SelectFilter::make('city')
+                    ->options(fn()=>User::whereNotNull('city')->distinct()->pluck('city','city')->sort()->toArray()),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
