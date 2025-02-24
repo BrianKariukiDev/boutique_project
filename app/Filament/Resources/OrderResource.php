@@ -21,6 +21,8 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -101,9 +103,10 @@ class OrderResource extends Resource
 
                         Select::make('shipping_method')
                             ->options([
-                                'company_courier'=>'Company Courier',
+                                'company_courier'=>'Company Courier Services',
                                 'personal_means'=>'Personal Means'
-                            ]),
+                            ])
+                            ->default('company_courier'),
 
                         Textarea::make('notes')
                             ->columnSpanFull(),
@@ -179,13 +182,56 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('user.name')
+                    ->label('Customer')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('grand_total')
+                    ->numeric()
+                    ->sortable()
+                    ->money('Kshs'),
+
+                TextColumn::make('payment_method')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('payment_status')
+                    ->sortable()
+                    ->searchable(),
+                
+                TextColumn::make('currency'),
+
+                TextColumn::make('shipping_method'),
+
+                SelectColumn::make('status')
+                    ->options([
+                        'new'=>'New',
+                        'processing'=>'Processing',
+                        'shipped'=>'Shipped',
+                        'delivered'=>'Delivered',
+                        'canceled'=>'Canceled'
+                    ]),
+
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
