@@ -199,20 +199,30 @@ class OrderResource extends Resource
 
                 TextColumn::make('payment_status')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->badge(),
                 
                 TextColumn::make('currency'),
 
                 TextColumn::make('shipping_method'),
 
-                SelectColumn::make('status')
-                    ->options([
-                        'new'=>'New',
-                        'processing'=>'Processing',
-                        'shipped'=>'Shipped',
-                        'delivered'=>'Delivered',
-                        'canceled'=>'Canceled'
-                    ]),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state)=>match($state){
+                        'new'=>'info',
+                        'processing'=>'warning',
+                        'shipped'=>'success',
+                        'delivered'=>'success',
+                        'canceled'=>'danger'
+                    })
+                    ->icon(fn(string $state)=>match($state){
+                        'new'=>'heroicon-m-sparkles',
+                        'processing'=>'heroicon-m-arrow-path',
+                        'shipped'=>'heroicon-m-truck',
+                        'delivered'=>'heroicon-m-check-badge',
+                        'cancelled'=>'heroicon-m-x-circle'
+                    }
+                    ),
 
                 TextColumn::make('created_at')
                     ->dateTime()
