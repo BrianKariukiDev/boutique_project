@@ -44,6 +44,8 @@ class OrderResource extends Resource
             'Order ID'=>$record->id
         ];
     }
+    protected static ?int $navigationSort=4;
+
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

@@ -37,6 +37,9 @@ class ProductResource extends Resource
             'user.name' => $record->name
         ];
     }
+    
+    protected static ?int $navigationSort=5;
+
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2X2';

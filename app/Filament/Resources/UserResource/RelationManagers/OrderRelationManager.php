@@ -78,7 +78,8 @@ class OrderRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->url(fn($record)=>OrderResource::getUrl('create',['record'=>$record])),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()

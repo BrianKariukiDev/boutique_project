@@ -24,6 +24,7 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->brandName("Kari's Boutique Admin")
             ->default()
             ->id('admin')
             ->path('admin')
