@@ -24,9 +24,23 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 
 class BrandResource extends Resource
 {
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'slug'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'name' => $record->name,
+            'slug' => $record->slug,
+        ];
+    }
+
     protected static ?string $model = Brand::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
@@ -39,15 +53,15 @@ class BrandResource extends Resource
                     ->maxLength(255)
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn(string $operation, $state, Set $set)=>
-                        $operation==='create'?$set('slug',Str::slug($state)): null),
+                    ->afterStateUpdated(fn(string $operation, $state, Set $set) =>
+                    $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                 TextInput::make('slug')
                     ->maxLength(255)
                     ->required()
                     ->disabled()
                     ->dehydrated()
-                    ->unique(Brand::class,'slug',ignoreRecord:true),
+                    ->unique(Brand::class, 'slug', ignoreRecord: true),
 
                 FileUpload::make('image')
                     ->label('logo')
@@ -83,11 +97,12 @@ class BrandResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(), 
-                    Tables\Actions\DeleteAction::make(),
-                ]
+                Tables\Actions\ActionGroup::make(
+                    [
+                        Tables\Actions\ViewAction::make(),
+                        Tables\Actions\EditAction::make(),
+                        Tables\Actions\DeleteAction::make(),
+                    ]
                 )
             ])
             ->bulkActions([

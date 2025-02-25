@@ -15,10 +15,25 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'name' => $record->name,
+            'email' => $record->email
+        ];
+    }
+
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
@@ -86,7 +101,7 @@ class UserResource extends Resource
                     ]),
 
                 SelectFilter::make('city')
-                    ->options(fn()=>User::whereNotNull('city')->distinct()->pluck('city','city')->sort()->toArray()),
+                    ->options(fn() => User::whereNotNull('city')->distinct()->pluck('city', 'city')->sort()->toArray()),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -105,7 +120,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-           OrderRelationManager::class 
+            OrderRelationManager::class
         ];
     }
 
