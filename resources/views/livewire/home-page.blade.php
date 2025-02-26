@@ -5,7 +5,7 @@
         <div class="swiper-wrapper">
           <div
             class="swiper-slide flex items-center justify-center bg-[url('/storage/app/public/working/pexels-photo-842811.jpeg')] bg-cover bg-no-repeat w-screen h-screen text-white">
-            <h1 class="text-7xl font-bold italic text-center text-white mt-50">Welcome to Incognito Boutique</h1>
+            <h1 class="text-7xl font-bold italic text-center text-white mt-50">Welcome to Karis Boutique</h1>
           </div>
           <div
             class="swiper-slide flex items-center justify-center h-64 bg-[url('https://www.shopimpressions.com/cdn/shop/files/inbloom-desktop2_1600x_crop_center.jpg?v=1738880331')] bg-center bg-no-repeat w-screen text-white">
