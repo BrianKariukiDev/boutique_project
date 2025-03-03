@@ -58,10 +58,11 @@
                             <div class="swiper-slide">
                                 <div class="flex items-center justify-around mx-2 w-screen">
                                     @foreach ($brandChunk as $brand)
-                                        <a href="/brands/{{$brand->slug}}" id="firstbrand">
-                                            <img src="{{url('storage',$brand->image)}}"
-                                                alt="New Collection" class="rounded-lg cover">
-                                            <h1 class="text-3xl font-bold italic text-center text-white mt-1">{{$brand->name}}
+                                        <a href="/brands/{{ $brand->slug }}" id="firstbrand">
+                                            <img src="{{ url('storage', $brand->image) }}" alt="New Collection"
+                                                class="rounded-lg cover">
+                                            <h1 class="text-3xl font-bold italic text-center text-white mt-1">
+                                                {{ $brand->name }}
                                             </h1>
                                         </a>
                                     @endforeach
@@ -132,66 +133,21 @@
             <div class="m-3 w-full h-full border-amber-500 border-2 mx-2 bg-slate-400 rounded-lg">
                 <h1 class="text-4xl font-bold italic text-center text-white p-2">Selected Only For You</h1>
                 <div class="grid-cols-3 grid gap-2 mx-1">
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
+                    @foreach ($selectedProducts as $selectedProduct)
+                        <div wire:key='{{ $selectedProduct->id }}' class="h-80 rounded-lg bg-no-repeat bg-cover"
+                            style="background-image:url('{{ url('storage', $selectedProduct->images[0]) }}')">
+                            <div id="categoriescontent"
+                                class="flex flex-col items-center justify-around rounded-lg h-full">
+                                <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">
+                                    {{ $selectedProduct->name }}</h4>
+                                <button wire:navigate href="/products/{{ $selectedProduct->slug }}"
+                                    class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
+                                    now</button>
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
+                    @endforeach
+
+
                 </div>
                 <button
                     class="mx-auto bg-blue-900 hover:bg-blue-600 hover:cursor-pointer p-4 rounded-lg text-2xl text-white my-2 block">View
@@ -209,18 +165,20 @@
             <div class="m-3 w-full h-full border-amber-500 border-2 mx-2 bg-slate-400 rounded-lg">
                 <h1 class="text-4xl font-bold italic text-center text-white p-2">Shop our latest collections</h1>
                 <div class="grid-cols-3 grid gap-2 mx-1">
-                  @foreach ($latestProducts as $latest)
-                      <div
-                        class="h-140 rounded-lg bg-no-repeat bg-[length:100%_100%] bg-center" style="background-image: url('{{url('storage',$latest->images[0])}}')">
-                        <div id="categoriescontent" class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">{{$latest->name}}</h4>
-                            <a href="/products/{{$latest->slug}}"
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</a>
+                    @foreach ($latestProducts as $latest)
+                        <div class="h-140 rounded-lg bg-no-repeat bg-[length:100%_100%] bg-center"
+                            style="background-image: url('{{ url('storage', $latest->images[0]) }}')">
+                            <div id="categoriescontent"
+                                class="flex flex-col items-center justify-around rounded-lg h-full">
+                                <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">{{ $latest->name }}
+                                </h4>
+                                <a href="/products/{{ $latest->slug }}"
+                                    class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
+                                    now</a>
+                            </div>
                         </div>
-                    </div>
-                  @endforeach
-                    
+                    @endforeach
+
                 </div>
                 <button wire:navigate href='/products'
                     class="mx-auto bg-blue-900 hover:bg-blue-600 hover:cursor-pointer p-4 rounded-lg text-2xl text-white my-2 block">View
@@ -235,77 +193,26 @@
 
 
 
-            <!-- LATEST COLLECTION -->
+            <!-- Trending Clothes -->
 
             <div class="m-3 w-full h-full border-amber-500 border-2 mx-2 bg-slate-400 rounded-lg">
                 <h1 class="text-4xl font-bold italic text-center text-white p-2">View Trending Clothes</h1>
                 <div class="grid-cols-3 grid gap-2 mx-1">
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent"
-                            class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
+
+                    @foreach ($trendingProducts as $trendingProduct)
+                        <div wire:key='{{$trendingProduct->id}}'
+                            class="bg-no-repeat bg-cover h-80 rounded-lg" style="background-image:url('{{url('storage',$trendingProduct->images[0])}}')">
+                            <div id="categoriescontent"
+                                class="flex flex-col items-center justify-around rounded-lg h-full">
+                                <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">{{$trendingProduct->name}}</h4>
+                                <button wire:navigate href='/products/{{$trendingProduct->slug}}'
+                                    class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
+                                    now</button>
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent"
-                            class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent"
-                            class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent"
-                            class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent"
-                            class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-[url('https://www.shopimpressions.com/cdn/shop/files/2411057903000-2024110811322900-1ff7f0f6new-in-express-sample-1_375x_crop_center.jpg?v=1737664889')] h-80 rounded-lg">
-                        <div id="categoriescontent"
-                            class="flex flex-col items-center justify-around rounded-lg h-full">
-                            <h4 class="text-xl font-bold italic text-center text-blue-600 mt-1">Spring Meadows Floral
-                                Midi Curves</h4>
-                            <button
-                                class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
-                                now</button>
-                        </div>
-                    </div>
+                    @endforeach
+
+
                 </div>
                 <button
                     class="mx-auto bg-blue-900 hover:bg-blue-600 hover:cursor-pointer p-4 rounded-lg text-2xl text-white my-2 block">View
