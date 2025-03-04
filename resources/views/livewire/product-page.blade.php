@@ -15,7 +15,7 @@
                                     x-on:click="mainImage='{{url('storage',$image)}}'">
                                     <img src="{{url('storage',$image)}}"
                                         alt="{{$product->name}}"
-                                        class="object-cover w-full lg:h-20 cursor-pointer hover:border hover:border-blue-500">
+                                        class="object-cover w-full lg:h-full cursor-pointer hover:border hover:border-blue-500">
                                 </div>
                             @endforeach
                             </div>
