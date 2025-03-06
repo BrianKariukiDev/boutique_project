@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "preline": "^2.7.0",
+        "sweetalert2": "^11.17.2",
         "tailwindcss": "^4.0.8"
     }
 }
