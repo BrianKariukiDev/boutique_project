@@ -2,9 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CartManagement;
+use App\Livewire\Partials\Navbar;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -14,6 +17,15 @@ use Livewire\WithPagination;
 class CategoriesPage extends Component
 {
     use WithPagination;
+
+    public function addToCart($product_id)
+    {
+        $totalCount= CartManagement::addItemTocart($product_id);
+
+        $this->dispatch('update-cart-count',totalCount: $totalCount)->to(Navbar::class);
+
+        LivewireAlert::title('Added to cart successfully')->success()->position('bottom-end')->timer(1000)->toast()->show();
+    }
 
     public $priceRange=500000;
 
