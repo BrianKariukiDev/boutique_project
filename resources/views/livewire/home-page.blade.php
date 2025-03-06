@@ -58,7 +58,7 @@
                             <div class="swiper-slide">
                                 <div class="flex items-center justify-around mx-2 w-screen">
                                     @foreach ($brandChunk as $brand)
-                                        <a href="/brands/{{ $brand->slug }}" id="firstbrand">
+                                        <a href="/brands?brands[0]={{$brand->id}}" id="firstbrand">
                                             <img src="{{ url('storage', $brand->image) }}" alt="New Collection"
                                                 class="rounded-lg cover">
                                             <h1 class="text-3xl font-bold italic text-center text-white mt-1">
@@ -97,7 +97,7 @@
                                 class="flex flex-col items-center justify-around rounded-lg h-full">
                                 <h1 class="text-3xl font-bold italic text-center !text-white mt-1">{{ $category->name }}
                                 </h1>
-                                <a href="/categories/{{ $category->slug }}"
+                                <a href="/categories?categories[0]={{$category->id}}"
                                     class="bg-white text-black rounded-lg inline-block p-2 hover:bg-blue-500 hover:cursor-pointer">Shop
                                     now</a>
                             </div>
