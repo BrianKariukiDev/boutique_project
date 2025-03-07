@@ -1,4 +1,4 @@
-<body class="bg-slate-400">
+<div wire:listen='refreshComponent' class="bg-slate-400">
     <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
         <div class="container mx-auto px-4">
             <h1 class="text-2xl font-semibold mb-4">Shopping Cart</h1>
@@ -6,7 +6,7 @@
                 <div class="md:w-3/4">
                     <div class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4">
                         @forelse($cartItems as $item)
-                            <table class="w-full">
+                            <table class="w-full" wire:key="{{$item['product_id']}}">
                                 <thead>
                                     <tr>
                                         <th class="text-left font-semibold">Product</th>
@@ -28,14 +28,14 @@
                                         <td class="py-4">{{Number::currency($item['unit_amount'],'KSHS')}}</td>
                                         <td class="py-4">
                                             <div class="flex items-center">
-                                                <button class="border rounded-md py-2 px-4 mr-2">-</button>
+                                                <button wire:click='decreaseQty({{$item['product_id']}})' class="border rounded-md py-2 px-4 mr-2 hover:cursor-pointer">-</button>
                                                 <span class="text-center w-8">{{$item['quantity']}}</span>
-                                                <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                                <button wire:click='increaseQty({{$item['product_id']}})' class="border rounded-md py-2 px-4 ml-2 cursor-pointer">+</button>
                                             </div>
                                         </td>
                                         <td class="py-4">{{Number::currency($item['total_amount'],'KSHS')}}</td>
-                                        <td><button
-                                                class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">Remove</button>
+                                        <td><a wire:click="removeFromCart({{$item['product_id']}})"
+                                                class="hover:cursor-pointer bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">Remove</a>
                                         </td>
                                     </tr>
                                     <!-- More product rows -->
@@ -77,4 +77,4 @@
             </div>
         </div>
     </div>
-</body>
+</div>

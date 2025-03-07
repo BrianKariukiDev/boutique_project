@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\Cookie;
-use phpDocumentor\Reflection\Types\Self_;
 
 class CartManagement
 {
@@ -147,9 +146,13 @@ class CartManagement
         return $cart_items;
     }
 
-    static public function calculateGrandTotal()
+    static public function calculateGrandTotal($cart_items)
     {
-        $cart_items = self::getCartItemsFromCookie();
+        if($cart_items==null){
+        $cart_items = [];
+        }else{
+            $cart_items=$cart_items;
+        }
 
         return array_sum(array_column($cart_items, 'total_amount'));
     }
