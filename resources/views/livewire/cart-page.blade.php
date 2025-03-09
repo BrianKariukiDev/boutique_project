@@ -71,7 +71,9 @@
                             <span class="font-semibold">Total</span>
                             <span class="font-semibold">{{Number::currency($grandTotal,'KSHS')}}</span>
                         </div>
-                        <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                        @if($grandTotal>0)
+                        <button wire:navigate href="/checkout" class="hover:cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                        @endif
                     </div>
                 </div>
             </div>
