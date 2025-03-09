@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function(){
-    Route::get('/forgot',ForgotPage::class);
+    Route::get('/forgot',ForgotPage::class)->name('password.request');
     Route::get('/login',LoginPage::class)->name('login');
     Route::get('/register',RegisterPage::class);
-    Route::get('/reset',ResetPage::class);
+    Route::get('/reset/{token}',ResetPage::class)->name('password.reset');
 });
 
 Route::middleware('auth')->group(function(){

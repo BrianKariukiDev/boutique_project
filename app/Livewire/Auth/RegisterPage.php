@@ -25,7 +25,7 @@ class RegisterPage extends Component
             'name' => 'required|min:3|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|max:35',
-            'phone' => 'required|min:10|max:10|digits:13',
+            'phone' => 'required|min:10|max:14',
             'city' => 'required|min:3|max:255',
         ]);
 
