@@ -11,7 +11,7 @@ class PickupPoint extends Model
         'city',
         'latitude',
         'longitude',
-        'agent_id'
+        'user_id'
     ];
 
     public function user(){
@@ -21,4 +21,18 @@ class PickupPoint extends Model
     public function deliveries(){
         return $this->hasMany(Delivery::class);
     }
+
+    // In app/Models/PickupPoint.php
+protected static function booted()
+{
+    static::saved(function ($pickupPoint) {
+        if ($pickupPoint->user_id) {
+            $user = User::find($pickupPoint->user_id);
+            if ($user && $user->role !== 'agent') {
+                $user->update(['role' => 'agent']);
+            }
+        }
+    });
+}
+
 }

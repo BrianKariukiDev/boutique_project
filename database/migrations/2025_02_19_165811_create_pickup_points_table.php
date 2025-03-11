@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('pickup_points', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agent_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('name');
             $table->string('city');
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
             $table->timestamps();
         });
     }
