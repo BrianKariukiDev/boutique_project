@@ -17,6 +17,8 @@ class Order extends Model
         'shipping_discount',
         'notes',
         'shipping_method',
+        'pickup_point_id',
+        'order_tracking_id'
     ];
 
     public function user()
@@ -37,5 +39,10 @@ class Order extends Model
     public function Address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function pickupPoint()
+    {
+        return $this->belongsTo(PickupPoint::class);
     }
 }

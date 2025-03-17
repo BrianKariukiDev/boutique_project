@@ -1,4 +1,10 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+    @if(session('payment_error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">{{ session('payment_error') }}</span>
+        </div>
+    @endif
     <h1 class="text-2xl font-bold text-gray-800  mb-4">
         Checkout
     </h1>
@@ -164,7 +170,7 @@
             </div>
             <button wire:click='placeOrder' type='submit'
                 class="bg-green-500 mt-4 w-full p-3 rounded-lg text-lg text-white hover:bg-green-600">
-                Place Order
+                <span wire:loading.remove wire:target='placeOrder'>Place Order</span><span wire:loading wire:target='placeOrder'>Placing...</span>
             </button>
             <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 ">
                 <div class="text-xl font-bold underline text-gray-700  mb-2">
