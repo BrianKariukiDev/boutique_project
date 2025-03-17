@@ -22,6 +22,10 @@ class PickupPoint extends Model
         return $this->hasMany(Delivery::class);
     }
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
     // In app/Models/PickupPoint.php
 protected static function booted()
 {
