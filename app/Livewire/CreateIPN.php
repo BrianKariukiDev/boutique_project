@@ -16,14 +16,6 @@ class CreateIPN extends Component
 
     public $pickup_point_id;
 
-    protected $listeners = ['pickup_point_id' => 'handlePickupPointId'];
-
-    public function handlePickupPointId($pickup_point_id)
-    {
-        $this->pickup_point_id = $pickup_point_id;
-    }
-
-
     public function handleIPN(Request $request)
     {
         // Process IPN from Pesapal
@@ -32,6 +24,7 @@ class CreateIPN extends Component
 
     public function handleCallback(Request $request)
     {
+        $this->pickup_point_id=session('pickup_point_id');
         $orderTrackingId = $request->query('OrderTrackingId');
 
         if ($orderTrackingId) {
@@ -42,7 +35,6 @@ class CreateIPN extends Component
 
                     $items = CartManagement::getCartItemsFromCookie();
                     $totalPrice = CartManagement::calculateGrandTotal($items);
-                    dd($this->pickup_point_id);
 
                     $order = Order::create([
                         'user_id' => Auth::id(),
@@ -50,7 +42,7 @@ class CreateIPN extends Component
                         'grand_total' => $totalPrice,
                         'payment_status' => 'Paid',
                         'payment_method' => 'Mobile Money',
-                        'pickup_point_id' => session('pickup_point_id'),
+                        'pickup_point_id' => $this->pickup_point_id,
                         'currency' => 'Kshs'
                     ]);
 
@@ -77,7 +69,6 @@ class CreateIPN extends Component
     public function handleCancel()
     {
         session()->flash('payment_error', 'Payment was canceled.Please try again.');
-        dd($this->pickup_point_id);
         return redirect()->route('checkout');
     }
     public function render()

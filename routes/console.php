@@ -12,4 +12,4 @@ Artisan::command('inspire', function () {
  use NjoguAmos\Pesapal\Models\PesapalToken;
  
  Schedule::command('pesapal:auth')->everyFourMinutes();
- Schedule::command('model:prune', ['--model' => [PesapalToken::class]])->everyFiveMinutes();
+ Schedule::command('model:prune', ['--model' => [PesapalToken::class]])->everyTenMinutes();

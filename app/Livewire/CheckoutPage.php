@@ -45,7 +45,7 @@ class CheckoutPage extends Component
             'payment_method' => 'required|in:cod,mobile_money'
         ]);
 
-        $this->dispatch('pickup_point_id', ['pickup_point_id' => $this->selected_pickup_point]);
+        session(['pickup_point_id'=>$this->selected_pickup_point]);
 
         if ($this->payment_method == 'mobile_money') {
             return $this->instantiateMobileMoneyPayment();
