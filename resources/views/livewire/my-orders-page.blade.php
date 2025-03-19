@@ -16,41 +16,21 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="odd:bg-white even:bg-gray-100">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">20</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">18-02-2024</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-orange-500 py-1 px-3 rounded text-white shadow">Pending</span></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-green-500 py-1 px-3 rounded text-white shadow">Paid</span></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">12,000.00</td>
+              @foreach($my_orders as $my_order)
+                <tr wire:key='{{$my_order->id}}' class="odd:bg-white even:bg-gray-100">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{$my_order->id}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{$my_order->created_at}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-orange-500 py-1 px-3 rounded text-white shadow">{{$my_order->status}}</span></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-green-500 py-1 px-3 rounded text-white shadow">{{$my_order->payment_status}}</span></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{$my_order->grand_total}}</td>
                   <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <a href="#" class="bg-slate-600 text-white py-2 px-4 rounded-md hover:bg-slate-500">View Details</a>
+                    <a href="/my-orders/{{$my_order->id}}" class="bg-slate-600 text-white py-2 px-4 rounded-md hover:bg-slate-500">View Details</a>
                   </td>
                 </tr>
-  
-                <tr class="odd:bg-white even:bg-gray-100">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">20</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">18-02-2024</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-orange-500 py-1 px-3 rounded text-white shadow">Pending</span></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-green-500 py-1 px-3 rounded text-white shadow">Paid</span></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">12,000.00</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <a href="#" class="bg-slate-600 text-white py-2 px-4 rounded-md hover:bg-slate-500">View Details</a>
-                  </td>
-                </tr>
-  
-                <tr class="odd:bg-white even:bg-gray-100">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">20</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">18-02-2024</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-orange-500 py-1 px-3 rounded text-white shadow">Pending</span></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><span class="bg-green-500 py-1 px-3 rounded text-white shadow">Paid</span></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">12,000.00</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <a href="#" class="bg-slate-600 text-white py-2 px-4 rounded-md hover:bg-slate-500">View Details</a>
-                  </td>
-                </tr>
-  
+              @endforeach
               </tbody>
             </table>
+              <div class="flex justify-end mt-6">{{$my_orders->links()}}
           </div>
         </div>
       </div>

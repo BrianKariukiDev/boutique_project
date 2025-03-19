@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\PickupPoint;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Title;
@@ -31,9 +33,8 @@ class CheckoutPage extends Component
         $this->pickup_points = PickupPoint::query()->get();
         $cartItems = CartManagement::getCartItemsFromCookie();
         $this->total = CartManagement::calculateGrandTotal($cartItems);
-        $this->phone = Auth::user()->phone??null;
-        $this->city = Auth::user()->city??null;
-
+        $this->phone = Auth::user()->phone ?? null;
+        $this->city = Auth::user()->city ?? null;
     }
 
     public function placeOrder()
@@ -45,12 +46,36 @@ class CheckoutPage extends Component
             'payment_method' => 'required|in:cod,mobile_money'
         ]);
 
-        session(['pickup_point_id'=>$this->selected_pickup_point]);
+        session(['pickup_point_id' => $this->selected_pickup_point]);
 
         if ($this->payment_method == 'mobile_money') {
             return $this->instantiateMobileMoneyPayment();
-        }else{
-            dd('Cash on delivery');
+        } else {
+            $items = CartManagement::getCartItemsFromCookie();
+            $totalPrice = CartManagement::calculateGrandTotal($items);
+
+            $order = Order::create([
+                'user_id' => Auth::id(),
+                'order_tracking_id' => null,
+                'grand_total' => $totalPrice,
+                'payment_status' => 'Pending',
+                'payment_method' => 'COD',
+                'pickup_point_id' => $this->selected_pickup_point,
+                'currency' => 'Kshs'
+            ]);
+
+            foreach ($items as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'unit_amount' => $item['unit_amount'],
+                    'total_amount' => $item['total_amount'],
+                ]);
+            }
+            session()->flash('order_success', 'Order placed successfully.');
+            CartManagement::clearCartItemsFromCookie();
+            return redirect()->route('home');
         }
     }
 
@@ -89,8 +114,8 @@ class CheckoutPage extends Component
             middleName: Auth::user()->name,
             //    lastName: ''
             //line2: "Gil House, Nairobi, Tom Mboya Street",
-                city: $this->city,
-                state: 'Kenya',
+            city: $this->city,
+            state: 'Kenya',
             //    postalCode: "",
             //    zipCode: "",
         );

@@ -55,7 +55,7 @@ class CreateIPN extends Component
                             'total_amount' => $item['total_amount'],
                         ]);
                     }
-                    session()->flash('payment_success', 'Payment successful!Order placed successfully.');
+                    session()->flash('order_success', 'Payment successful!Order placed successfully.');
                     CartManagement::clearCartItemsFromCookie();
                     return redirect()->route('home'); // Adjust as needed
                 }
