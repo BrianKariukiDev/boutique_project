@@ -12,7 +12,7 @@ class HomePage extends Component
 {
     public function mount()
     {
-        if (session('payment_success')) {
+        if (session('order_success')) {
             LivewireAlert::title('Order placed Successfully')->success()->position('center')->timer(1000)->toast()->show();
         }
     }
