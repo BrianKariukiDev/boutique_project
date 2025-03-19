@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function(){
     });
     Route::get('/checkout',CheckoutPage::class)->name('checkout');
     Route::get('/my-orders',MyOrdersPage::class);
-    Route::get('/my-orders/{order}',MyOrderDetailsPage::class);
+    Route::get('/my-orders/{order_id}',MyOrderDetailsPage::class);
     Route::get('/success',SuccessPage::class);
     Route::get('/cancel',CancelPage::class);
     

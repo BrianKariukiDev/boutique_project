@@ -13,7 +13,7 @@ class HomePage extends Component
     public function mount()
     {
         if (session('order_success')) {
-            LivewireAlert::title('Order placed Successfully')->success()->position('center')->timer(1000)->toast()->show();
+            LivewireAlert::title('Order placed Successfully')->success()->position('center')->timer(5000)->toast()->show();
         }
     }
     public function render()
