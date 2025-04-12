@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\Mail\OrderDelivered;
+use App\Mail\OrderShipped;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -45,4 +49,27 @@ class Order extends Model
     {
         return $this->belongsTo(PickupPoint::class);
     }
+
+
+
+    protected static function booted()
+{
+    static::updating(function ($order) {
+        //if ($order->isDirty('status')) {
+        //    Log::info('Old status: ' . $order->getOriginal('status'));
+        //    Log::info('New status: ' . $order->status);
+        //}
+    
+        if ($order->isDirty('status') && $order->status == 'shipped' || $order->status == 'Shipped') {
+            //Log::info('Sending email to: ' . $order->user->email);
+            Mail::to($order->user->email)->send(new OrderShipped($order));
+        }
+
+        if ($order->isDirty('status') && $order->status == 'delivered' || $order->status == 'Delivered') {
+            //Log::info('Sending email to: ' . $order->user->email);
+            Mail::to($order->user->email)->send(new OrderDelivered($order));
+        }
+    });
+    
+}
 }

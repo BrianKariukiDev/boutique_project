@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Agent;
 use App\Livewire\Auth\ForgotPage;
 use App\Livewire\Auth\LoginPage;
 use App\Livewire\Auth\RegisterPage;
@@ -8,6 +9,7 @@ use App\Livewire\BrandsPage;
 use App\Livewire\CancelPage;
 use App\Livewire\CartPage;
 use App\Livewire\CategoriesPage;
+use App\Livewire\Chatbot;
 use App\Livewire\CheckoutPage;
 use App\Livewire\CreateIPN;
 use App\Livewire\HomePage;
@@ -34,7 +36,7 @@ Route::middleware('auth')->group(function(){
     });
     Route::get('/checkout',CheckoutPage::class)->name('checkout');
     Route::get('/my-orders',MyOrdersPage::class);
-    Route::get('/my-orders/{order_id}',MyOrderDetailsPage::class);
+    Route::get('/my-orders/{order_id}',MyOrderDetailsPage::class)->name('my-orders.show');
     Route::get('/success',SuccessPage::class);
     Route::get('/cancel',CancelPage::class);
     
@@ -56,3 +58,8 @@ Route::get('/ipn',CreateIPN::class);
 Route::get('/pesapal/ipn', [CreateIPN::class, 'handleIPN'])->name('pesapal.ipn');
 Route::get('/pesapal/callback', [CreateIPN::class, 'handleCallback'])->name('pesapal.callback');
 Route::get('/pesapal/cancel', [CreateIPN::class, 'handleCancel'])->name('pesapal.cancel');
+
+
+Route::get('/agent',Agent::class)->name('agent');
+
+Route::get('/bot',Chatbot::class)->name('chatbot');
