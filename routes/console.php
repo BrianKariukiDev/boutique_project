@@ -11,5 +11,5 @@ Artisan::command('inspire', function () {
  use Illuminate\Support\Facades\Schedule;
  use NjoguAmos\Pesapal\Models\PesapalToken;
  
+ Schedule::command('model:prune', ['--model' => [PesapalToken::class]])->everyFourMinutes();
  Schedule::command('pesapal:auth')->everyFourMinutes();
- Schedule::command('model:prune', ['--model' => [PesapalToken::class]])->everyTenMinutes();

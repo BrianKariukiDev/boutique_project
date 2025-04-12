@@ -33,6 +33,21 @@ class CreateIPN extends Component
             if ($transaction && isset($transaction['payment_status_description'])) {
                 if ($transaction['payment_status_description'] === 'Completed') {
 
+                    
+                    if(Auth::user()->role=="agent" && session('order')){
+                        $order= session('order');
+                        if ($order) {
+                            $order=Order::where('id',$order)->first();
+                            $order->update([
+                                'payment_status' => 'Paid',
+                                'payment_method' => 'Mobile Money',
+                                'order_tracking_id' => $orderTrackingId,
+                            ]);
+
+                            session()->flash('order_success', 'Customer payment was successful!');
+                            return redirect()->route('agent');
+                        }
+                    }else{
                     $items = CartManagement::getCartItemsFromCookie();
                     $totalPrice = CartManagement::calculateGrandTotal($items);
 
@@ -58,6 +73,7 @@ class CreateIPN extends Component
                     session()->flash('order_success', 'Payment successful!Order placed successfully.');
                     CartManagement::clearCartItemsFromCookie();
                     return redirect()->route('home'); // Adjust as needed
+                }
                 }
             }
         }
