@@ -3,10 +3,12 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Mail\OrderPlaced;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PickupPoint;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use NjoguAmos\Pesapal\DTOs\PesapalAddressData;
@@ -75,6 +77,7 @@ class CheckoutPage extends Component
             }
             session()->flash('order_success', 'Order placed successfully.');
             CartManagement::clearCartItemsFromCookie();
+            Mail::to(Auth::user()->email)->send(new OrderPlaced($order));
             return redirect()->route('home');
         }
     }
@@ -126,6 +129,7 @@ class CheckoutPage extends Component
         );
 
         if ($order && isset($order['redirect_url'])) {
+            Mail::to(Auth::user()->email)->send(new OrderPlaced($order));
             return redirect()->away($order['redirect_url']); // Redirect user to Pesapal payment page
         }
 
