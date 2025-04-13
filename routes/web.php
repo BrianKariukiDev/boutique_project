@@ -19,6 +19,9 @@ use App\Livewire\MyOrdersPage;
 use App\Livewire\ProductPage;
 use App\Livewire\ProductsPage;
 use App\Livewire\SuccessPage;
+use App\Models\Category;
+use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +42,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/my-orders/{order_id}',MyOrderDetailsPage::class)->name('my-orders.show');
     Route::get('/success',SuccessPage::class);
     Route::get('/cancel',CancelPage::class);
+
+    Route::get('/agent',Agent::class)->name('agent');
+
     
 });
 
@@ -59,7 +65,10 @@ Route::get('/pesapal/ipn', [CreateIPN::class, 'handleIPN'])->name('pesapal.ipn')
 Route::get('/pesapal/callback', [CreateIPN::class, 'handleCallback'])->name('pesapal.callback');
 Route::get('/pesapal/cancel', [CreateIPN::class, 'handleCancel'])->name('pesapal.cancel');
 
-
-Route::get('/agent',Agent::class)->name('agent');
-
 Route::get('/bot',Chatbot::class)->name('chatbot');
+
+use App\Http\Controllers\LeafletController;
+use App\Livewire\ProductLeaflets;
+
+Route::get('/leaflets/{category}', [ProductLeaflets::class, 'download']);
+

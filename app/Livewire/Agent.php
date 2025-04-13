@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\PickupPoint;
 use Illuminate\Support\Facades\Auth;
@@ -21,10 +22,17 @@ class Agent extends Component
     public $pickup_points;
     public $orders;
     public $order;
+    public $categories;
 
     public function mount()
     {
+        if(Auth::user()->role !== 'agent') {
+            abort(403, 'Unauthorized');
+        }
+        
         $this->pickup_points = PickupPoint::where('user_id', Auth::user()->id)->get();
+
+        $this->categories=Category::all();
 
         $this->orders= Order::whereIn('pickup_point_id', $this->pickup_points->pluck('id')->toArray())->get();
 
