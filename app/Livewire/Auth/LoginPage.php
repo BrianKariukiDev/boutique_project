@@ -27,6 +27,11 @@ class LoginPage extends Component
         if(Auth::user()->role === 'admin') {
             return redirect()->intended('/admin');
         }
+
+        if(Auth::user()->role === 'agent') {
+            return redirect()->intended('/agent');
+        }
+        
         return redirect()->intended('/');
     }
     public function render()
