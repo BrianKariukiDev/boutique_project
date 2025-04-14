@@ -20,8 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-         if(config('app.env')==='local'){
-             URL::forceScheme('https');
-         }
+        if (app()->environment('local') && isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'expose.dev')) {
+            URL::forceScheme('https');
+        }        
+        
     }
 }

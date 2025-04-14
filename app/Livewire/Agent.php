@@ -34,7 +34,7 @@ class Agent extends Component
 
         $this->categories=Category::all();
 
-        $this->orders= Order::whereIn('pickup_point_id', $this->pickup_points->pluck('id')->toArray())->get();
+        $this->orders= Order::whereIn('pickup_point_id', $this->pickup_points->pluck('id')->toArray())->latest()->get();
 
         if (session('order_success')) {
             LivewireAlert::title(session('order_success'))->success()->position('center')->timer(5000)->toast()->show();

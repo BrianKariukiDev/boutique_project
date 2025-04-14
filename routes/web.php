@@ -69,6 +69,10 @@ Route::get('/bot',Chatbot::class)->name('chatbot');
 
 use App\Http\Controllers\LeafletController;
 use App\Livewire\ProductLeaflets;
+use App\Livewire\UssdHandler;
 
 Route::get('/leaflets/{category}', [ProductLeaflets::class, 'download']);
+
+Route::match(['get','post'],'/ussd',UssdHandler::class)->name('ussd')
+->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);;
 
