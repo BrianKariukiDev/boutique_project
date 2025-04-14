@@ -22,7 +22,7 @@
               </p>
             </div>
             <div class="mt-1 flex items-center gap-x-2 dark:text-white">
-              <div>{{Auth::user()->name}}</div>
+              <div>{{$user->name}}</div>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
             </div>
             <div>
               <p class="font-semibold">Customer's Phone No:</p>
-              <p>{{Auth::user()->phone}}</p>
+              <p>{{$user->phone}}</p>
             </div>
           </div>
         </div>
