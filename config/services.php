@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'africastalking' => [
+    'username' => env('AFRICASTALKING_USERNAME'),
+    'api_key' => env('AFRICASTALKING_API_KEY'),
+],
+
+
 ];

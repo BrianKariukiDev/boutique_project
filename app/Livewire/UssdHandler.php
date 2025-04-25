@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\AfricasTalkingService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -176,6 +177,11 @@ class UssdHandler extends Component
                 'total_amount' => $total
             ]);
 
+            // Send an SMS for "Order Received"
+        $sms = new AfricasTalkingService();
+        $message = "Hello {$user->name}, your order (#{$order->id}) was placed successfully. Total: KES {$total}. Thank you!";
+        $sms->sendSmsWithSubject('0'.$trimmedPhone, 'Order Received', $message);
+
             return "END Order placed: {$product->name} x{$quantity}\nOrder ID: {$order->id}\nDelivery To: {$station->name}\nPay Ksh {$total} on delivery.\nThank you!";
         }
 
@@ -208,7 +214,7 @@ class UssdHandler extends Component
 
             $product = DB::table('products')->where('id', $productId)->first();
             $station = DB::table('pickup_points')->offset($stationIndex)->first();
-            $trimmedPhone = ltrim($phoneNumber, '+');
+            $trimmedPhone = ltrim($phoneNumber, '+254');
             $user = DB::table('users')->where('phone', 'LIKE', '%' . $trimmedPhone)->first();
 
             if (!$user) return "END Your phone number is not registered.";
@@ -235,6 +241,12 @@ class UssdHandler extends Component
                 'unit_amount' => $product->sale_price,
                 'total_amount' => $total
             ]);
+
+            
+        // Send an SMS for "Order Received"
+        $sms = new AfricasTalkingService();
+        $message = "Hello {$user->name}, your order (#{$order->id}) was placed successfully. Total: KES {$total}. Thank you!";
+        $sms->sendSmsWithSubject('0'.$trimmedPhone, 'Order Received', $message);
 
             return "END Order placed: {$product->name} x{$quantity}\nOrder ID: {$order->id}\nDelivery To: {$station->name}\nPay Ksh {$total} on delivery.";
         }
