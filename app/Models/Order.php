@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Mail\OrderDelivered;
 use App\Mail\OrderShipped;
+use App\Services\AfricasTalkingService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -53,23 +54,33 @@ class Order extends Model
 
 
     protected static function booted()
-{
-    static::updating(function ($order) {
-        //if ($order->isDirty('status')) {
-        //    Log::info('Old status: ' . $order->getOriginal('status'));
-        //    Log::info('New status: ' . $order->status);
-        //}
-    
-        if ($order->isDirty('status') && $order->status == 'shipped' || $order->status == 'Shipped') {
-            //Log::info('Sending email to: ' . $order->user->email);
-            Mail::to($order->user->email)->send(new OrderShipped($order));
-        }
+    {
+        static::updating(function ($order) {
+            //if ($order->isDirty('status')) {
+            //    Log::info('Old status: ' . $order->getOriginal('status'));
+            //    Log::info('New status: ' . $order->status);
+            //}
 
-        if ($order->isDirty('status') && $order->status == 'delivered' || $order->status == 'Delivered') {
-            //Log::info('Sending email to: ' . $order->user->email);
-            Mail::to($order->user->email)->send(new OrderDelivered($order));
-        }
-    });
-    
-}
+            if ($order->isDirty('status') && $order->status == 'shipped' || $order->status == 'Shipped') {
+                //Log::info('Sending email to: ' . $order->user->email);
+                Mail::to($order->user->email)->send(new OrderShipped($order));
+
+
+                // Send an SMS for "Order Received"
+                $sms = new AfricasTalkingService();
+                $message = "Hello {$order->user->name}, your order (#{$order->id}) has left for delivery. We will notify you once it reaches the pickup point. Thank you!";
+                $sms->sendSmsWithSubject($order->user->phone, 'Order Shipped', $message);
+            }
+
+            if ($order->isDirty('status') && $order->status == 'delivered' || $order->status == 'Delivered') {
+                //Log::info('Sending email to: ' . $order->user->email);
+                Mail::to($order->user->email)->send(new OrderDelivered($order));
+
+                // Send an SMS for "Order Received"
+                $sms = new AfricasTalkingService();
+                $message = "Hello {$order->user->name}, your order (#{$order->id}) has arrived.Kindly colleect it at {$order->pickupPoint->name}. You are required to pay Kshs{$order->grand_total} before picking. Thank you!";
+                $sms->sendSmsWithSubject($order->user->phone, 'Order Delivered', $message);
+            }
+        });
+    }
 }

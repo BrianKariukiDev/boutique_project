@@ -73,7 +73,7 @@
                                             <button class="text-indigo-600 hover:text-indigo-800 font-medium"
                                                 wire:navigate
                                                 href='{{ route('my-orders.show', $order->id) }}'>View</button>
-                                            @if ($order->payment_status == 'Pending')
+                                            @if ($order->payment_status == 'Pending' || $order->payment_status == 'pending')
                                                 <button
                                                     class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-3 rounded-md text-xs"
                                                     wire:click='instantiateMobileMoneyPayment({{ $order }})'><span
